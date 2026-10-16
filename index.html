@@ -16,10 +16,7 @@
 }
 
 * { box-sizing: border-box; }
-
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -100,10 +97,7 @@ body:before {
   backdrop-filter: blur(10px);
 }
 
-main {
-  position: relative;
-  z-index: 1;
-}
+main { position: relative; z-index: 1; }
 
 .hero {
   min-height: 82vh;
@@ -132,10 +126,7 @@ h1 {
   animation: fadeUp 1.2s .1s both;
 }
 
-h1 em {
-  color: #ff9bc9;
-  font-weight: normal;
-}
+h1 em { color: #ff9bc9; font-weight: normal; }
 
 .subtitle {
   max-width: 540px;
@@ -183,9 +174,7 @@ h1 em {
   45% { transform: scale(1.08); }
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(22px); }
@@ -216,14 +205,8 @@ h1 em {
   margin-top: 13px;
 }
 
-section {
-  padding: 72px 20px;
-  text-align: center;
-}
-
-#message {
-  display: none;
-}
+section { padding: 72px 20px; text-align: center; }
+#message { display: none; }
 
 #message.show {
   display: block;
@@ -289,9 +272,7 @@ h2 {
   animation: fadeUp .8s both;
 }
 
-.surprise.show {
-  display: block;
-}
+.surprise.show { display: block; }
 
 footer {
   text-align: center;
@@ -311,10 +292,7 @@ footer {
 
 @keyframes floatUp {
   10% { opacity: .8; }
-  100% {
-    transform: translateY(-115vh) rotate(35deg);
-    opacity: 0;
-  }
+  100% { transform: translateY(-115vh) rotate(35deg); opacity: 0; }
 }
 
 .confetti {
@@ -333,7 +311,7 @@ footer {
   }
 }
 
-/* Optional birthday countdown */
+/* Birthday countdown */
 #countdownScreen {
   position: fixed;
   inset: 0;
@@ -389,7 +367,7 @@ footer {
   font: 11px Arial, sans-serif;
 }
 
-/* Full-screen wish screen */
+/* Wish screen and shooting star */
 #wishScreen {
   display: none;
   position: fixed;
@@ -406,9 +384,7 @@ footer {
     linear-gradient(145deg, #080510, #160b24, #080510);
 }
 
-#wishScreen.active {
-  display: flex;
-}
+#wishScreen.active { display: flex; }
 
 #wishCanvas {
   position: absolute;
@@ -419,8 +395,7 @@ footer {
   pointer-events: none;
 }
 
-#wishMessage,
-#wishSubMessage {
+#wishMessage, #wishSubMessage {
   position: relative;
   z-index: 2;
 }
@@ -457,7 +432,7 @@ footer {
 
 <body>
 
-<!-- Optional countdown screen; hidden for now -->
+<!-- Countdown screen: only appears outside birthday day -->
 <div id="countdownScreen">
   <div style="font-size:55px;">💗✨</div>
   <p>A LITTLE SURPRISE IS WAITING FOR YOU</p>
@@ -538,9 +513,11 @@ Keep shining in your own beautiful way. miss beautiful 💖</div>
       </div>
 
       <div class="surprise" id="surpriseText">
-        🎉 Surprise! If I could make one birthday wish for you,
-        it would be that life gives you a thousand reasons to smile —
-        today and every day. You deserve all the lovely things. 💕
+        अगर मैं आपके जन्मदिन पर आपके लिए एक दुआ माँग सकता, तो मेरी दुआ होती कि ज़िंदगी आपको मुस्कुराने की हज़ारों वजहें दे — आज भी और हर दिन। ❤️✨
+
+      आपकी ज़िंदगी हमेशा खुशियों से भरी रहे, आपके चेहरे पर मुस्कान बनी रहे और आपको आपकी पसंद की हर खूबसूरत चीज़ मिले। 💖🌸
+
+      Once again, Happy Birthday Maim! 🎂💗✨💕
       </div>
 
       <button class="primary" onclick="makeItSparkle()">
@@ -554,7 +531,6 @@ Keep shining in your own beautiful way. miss beautiful 💖</div>
   Made with a little courage, lots of care & a heart full of wishes ♡
 </footer>
 
-<!-- Full-screen wish and meteor animation -->
 <div id="wishScreen">
   <div id="wishMessage">
     Please close your eyes<br>
@@ -579,59 +555,7 @@ if (PERSONAL_MESSAGE.trim()) {
   document.getElementById("letterText").textContent = PERSONAL_MESSAGE;
 }
 
-/* Reveal the birthday message and start music */
-async function openSurprise() {
-  document.getElementById("message").classList.add("show");
-  document.getElementById("surpriseText").classList.add("show");
-
-  const btn = document.getElementById("musicBtn");
-
-  if (!musicOn) {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      master = audioCtx.createGain();
-      master.gain.value = 0.65;
-      master.connect(audioCtx.destination);
-    }
-
-    if (audioCtx.state === "suspended") {
-      await audioCtx.resume();
-    }
-
-    musicOn = true;
-    master.gain.setTargetAtTime(0.65, audioCtx.currentTime, 0.2);
-    musicStep();
-    musicTimer = setInterval(musicStep, 650);
-    btn.textContent = "♫ Pause music";
-  }
-
-  burstHearts(34);
-
-  document.getElementById("message").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-}
-
-/* Floating heart burst */
-function burstHearts(amount = 24) {
-  for (let i = 0; i < amount; i++) {
-    const el = document.createElement("span");
-    el.className = "confetti";
-    el.textContent = ["♥", "♡", "✦", "✨"][Math.floor(Math.random() * 4)];
-
-    el.style.left = (40 + Math.random() * 20) + "vw";
-    el.style.top = (35 + Math.random() * 25) + "vh";
-    el.style.color = ["#ff9bc9", "#e7c7ff", "#ffe3ef"][Math.floor(Math.random() * 3)];
-    el.style.setProperty("--x", (Math.random() * 400 - 200) + "px");
-    el.style.setProperty("--y", (Math.random() * 400 - 200) + "px");
-
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 1900);
-  }
-}
-
-/* Original browser-generated soft music */
+/* Browser-generated soft music */
 let audioCtx = null;
 let master = null;
 let musicTimer = null;
@@ -686,9 +610,7 @@ document.getElementById("musicBtn").addEventListener("click", async () => {
     master.connect(audioCtx.destination);
   }
 
-  if (audioCtx.state === "suspended") {
-    await audioCtx.resume();
-  }
+  if (audioCtx.state === "suspended") await audioCtx.resume();
 
   musicOn = !musicOn;
 
@@ -703,6 +625,54 @@ document.getElementById("musicBtn").addEventListener("click", async () => {
     btn.textContent = "♫ Play soft music";
   }
 });
+
+/* Reveal the birthday message and start music on button tap */
+async function openSurprise() {
+  document.getElementById("message").classList.add("show");
+  document.getElementById("surpriseText").classList.add("show");
+
+  if (!musicOn) {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      master = audioCtx.createGain();
+      master.gain.value = 0.65;
+      master.connect(audioCtx.destination);
+    }
+
+    if (audioCtx.state === "suspended") await audioCtx.resume();
+
+    musicOn = true;
+    master.gain.setTargetAtTime(0.65, audioCtx.currentTime, 0.2);
+    musicStep();
+    musicTimer = setInterval(musicStep, 650);
+    document.getElementById("musicBtn").textContent = "♫ Pause music";
+  }
+
+  burstHearts(34);
+
+  document.getElementById("message").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+/* Floating heart burst */
+function burstHearts(amount = 24) {
+  for (let i = 0; i < amount; i++) {
+    const el = document.createElement("span");
+    el.className = "confetti";
+    el.textContent = ["♥", "♡", "✦", "✨"][Math.floor(Math.random() * 4)];
+
+    el.style.left = (40 + Math.random() * 20) + "vw";
+    el.style.top = (35 + Math.random() * 25) + "vh";
+    el.style.color = ["#ff9bc9", "#e7c7ff", "#ffe3ef"][Math.floor(Math.random() * 3)];
+    el.style.setProperty("--x", (Math.random() * 400 - 200) + "px");
+    el.style.setProperty("--y", (Math.random() * 400 - 200) + "px");
+
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1900);
+  }
+}
 
 /* Floating hearts in the background */
 setInterval(() => {
@@ -720,7 +690,7 @@ setInterval(() => {
   setTimeout(() => el.remove(), 11500);
 }, 650);
 
-/* Shooting star: 2.5 second pause + 15 second journey */
+/* Shooting star: 2.5-second pause + 15-second journey */
 let wishAnimationId = null;
 let wishReturnTimer = null;
 let wishStartTimer = null;
@@ -783,7 +753,6 @@ function makeItSparkle() {
 
     for (const star of stars) {
       const twinkle = 0.7 + Math.sin(time / 700 + star.x) * 0.3;
-
       ctx.beginPath();
       ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(255,235,250,${star.a * twinkle})`;
@@ -792,10 +761,8 @@ function makeItSparkle() {
   }
 
   function drawMeteor(progress) {
-    // Diagonal top-to-bottom journey
     const x = W * 0.12 + W * 0.76 * progress;
     const y = -35 + (H + 70) * progress;
-
     const angle = Math.atan2(H + 70, W * 0.76);
     const tailLength = Math.min(W * 0.24, 240);
 
@@ -809,7 +776,6 @@ function makeItSparkle() {
     ctx.save();
     ctx.globalCompositeOperation = "lighter";
 
-    // Glowing pink tail
     const gradient = ctx.createLinearGradient(tailX, tailY, x, y);
     gradient.addColorStop(0, "rgba(255,100,190,0)");
     gradient.addColorStop(0.5, `rgba(255,115,200,${alpha * 0.55})`);
@@ -825,13 +791,11 @@ function makeItSparkle() {
     ctx.shadowColor = "#ff8acb";
     ctx.stroke();
 
-    // Pink glow around the meteor head
     ctx.beginPath();
     ctx.arc(x, y, 12, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(255,145,215,${alpha * 0.25})`;
     ctx.fill();
 
-    // Bright white-gold centre
     ctx.beginPath();
     ctx.arc(x, y, 4, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(255,255,245,${alpha})`;
@@ -866,14 +830,12 @@ function makeItSparkle() {
   wishResizeHandler = resizeCanvas;
   window.addEventListener("resize", wishResizeHandler, { passive: true });
 
-  // Let her read the wish before the meteor appears
   wishStartTimer = setTimeout(() => {
     wishMessage.style.opacity = "0.88";
     meteorStartTime = performance.now();
     wishAnimationId = requestAnimationFrame(animate);
   }, WISH_DELAY);
 
-  // Return to the website's first page after the journey
   wishReturnTimer = setTimeout(() => {
     if (wishAnimationId !== null) {
       cancelAnimationFrame(wishAnimationId);
@@ -889,45 +851,63 @@ function makeItSparkle() {
 
     wishScreen.classList.remove("active");
     document.body.style.overflow = "";
-
     ctx.clearRect(0, 0, W, H);
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, WISH_DELAY + METEOR_DURATION);
 }
 
-/* Optional countdown: hidden until you decide to enable it */
-const birthdayTime = new Date("2026-10-17T00:00:00+05:30").getTime();
+/* Annual birthday countdown — India Standard Time (IST)
+   17 October: website unlocked for the full birthday day.
+   18 October at midnight: countdown to next year's birthday begins.
+*/
+const countdownScreen = document.getElementById("countdownScreen");
 let countdownTimer = null;
 
 function updateCountdown() {
-  const countdownScreen = document.getElementById("countdownScreen");
-  const distance = birthdayTime - Date.now();
+  const now = Date.now();
 
-  if (distance <= 0) {
+  // Get the current year according to India time.
+//   const indiaNow = new Date(now + (5 * 60 + 30) * 60 * 1000);
+  const year = indiaNow.getUTCFullYear();
+
+  const birthdayStart = new Date(
+    `${year}-10-17T00:00:00+05:30`
+  ).getTime();
+
+  const birthdayEnd = new Date(
+    `${year}-10-18T00:00:00+05:30`
+  ).getTime();
+
+  let targetTime;
+
+  if (now < birthdayStart) {
+    targetTime = birthdayStart;
+    countdownScreen.style.display = "flex";
+  } else if (now < birthdayEnd) {
+    // Birthday day: do not show the countdown overlay.
     countdownScreen.style.display = "none";
-
-    if (countdownTimer !== null) {
-      clearInterval(countdownTimer);
-    }
-
     return;
+  } else {
+    targetTime = new Date(
+      `${year + 1}-10-17T00:00:00+05:30`
+    ).getTime();
+    countdownScreen.style.display = "flex";
   }
 
+  const distance = Math.max(0, targetTime - now);
+
   document.getElementById("days").textContent =
-    String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, "0");
+    String(Math.floor(distance / 86400000)).padStart(2, "0");
 
   document.getElementById("hours").textContent =
-    String(Math.floor((distance / (1000 * 60 * 60)) % 24)).padStart(2, "0");
+    String(Math.floor((distance % 86400000) / 3600000)).padStart(2, "0");
 
   document.getElementById("minutes").textContent =
-    String(Math.floor((distance / (1000 * 60)) % 60)).padStart(2, "0");
+    String(Math.floor((distance % 3600000) / 60000)).padStart(2, "0");
 
   document.getElementById("seconds").textContent =
-    String(Math.floor((distance / 1000) % 60)).padStart(2, "0");
+    String(Math.floor((distance % 60000) / 1000)).padStart(2, "0");
 }
 
 updateCountdown();
